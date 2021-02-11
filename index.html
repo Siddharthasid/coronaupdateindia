@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corona India website</title>
+    <!---Bootstrap4 cdn link---->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!----JQuery cdn link------->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body onload="fetch()">
+    
+
+
+    <section class="container coronaUpdates">
+    
+        <div class="m-5">
+            <h3 class="text-center text-uppercase text-danger">Covid 19 Updates India</h3>
+        </div>
+
+        <div class="table-responsive">
+        
+            <table class="table table-border table-striped table-hover text-center" id="tbval">
+            
+                <tr>
+                    <th>LastUpdateTime</th>
+                    <th>States</th>
+                    <th>Confirmed</th>
+                    <th>Active</th>
+                    <th>Recovered</th>
+                    <th>Deaths</th>
+                </tr>
+            
+            </table>
+
+        </div>
+
+
+    
+    </section>
+
+
+<script>
+
+    function fetch(){
+        $.get("https://api.covid19india.org/data.json", 
+        
+            function(data){
+                //console.log(data['Countries'].length)
+
+                var tbval = document.getElementById("tbval");
+
+                for(var i=1;i<data['statewise'].length;i++){
+
+                    var x = tbval.insertRow(); //This will create a row in the table using JQuery
+                    
+                    //First Cell------------>
+                    x.insertCell(0);  //This will create a cell in the row in the table using JQuery
+
+                    tbval.rows[i].cells[0].innerHTML = data['statewise'][i]['lastupdatedtime'];
+                    
+                    //Second Cell------------>
+                    x.insertCell(1);  //This will create a cell in the row in the table using JQuery
+                    tbval.rows[i].cells[1].innerHTML = data['statewise'][i]['state'];
+                    
+                    x.insertCell(2);  //This will create a cell in the row in the table using JQuery
+                    tbval.rows[i].cells[2].innerHTML = data['statewise'][i]['confirmed'];
+                    
+                    //Fourth Cell------------>
+                    x.insertCell(3);  //This will create a cell in the row in the table using JQuery
+                    tbval.rows[i].cells[3].innerHTML = data['statewise'][i]['active'];
+                    
+                    //Fifth Cell------------>
+                    x.insertCell(4);  //This will create a cell in the row in the table using JQuery
+                    tbval.rows[i].cells[4].innerHTML = data['statewise'][i]['recovered'];
+                    
+                    //Sixth Cell------------>
+                    x.insertCell(5);  //This will create a cell in the row in the table using JQuery
+                    tbval.rows[i].cells[5].innerHTML = data['statewise'][i]['deaths'];
+                    
+                }
+            }
+        
+        )
+    }
+
+</script>
+
+
+
+</body>
+</html>
